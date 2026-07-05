@@ -9,6 +9,7 @@ from rich.prompt import Confirm, Prompt
 from . import gitops, leetcode_api, metadata, naming, readmes
 from .config import Config
 from .exceptions import (
+    GitCommandError,
     GitNotInstalledError,
     NotAGitRepoError,
     RepositoryNotFoundError,
@@ -259,7 +260,11 @@ def run_sync(config: Config) -> None:
 
         commit_message = f"{config.git.commit_prefix} {number}: {title}"
         console.print(f'git commit "{commit_message}"', end="  ")
-        gitops.commit(repository_path, commit_message)
+        try:
+            gitops.commit(repository_path, commit_message)
+        except GitCommandError:
+            gitops.reset_paths(repository_path, touched_paths)
+            raise
         console.print("[green]done[/green]")
         txn.mark_committed()
 

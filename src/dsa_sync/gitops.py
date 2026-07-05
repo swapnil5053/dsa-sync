@@ -78,6 +78,13 @@ def add(repository_path: Path, paths: list[str]) -> None:
     _run(repository_path, ["add", "--", *paths])
 
 
+def reset_paths(repository_path: Path, paths: list[str]) -> None:
+    """Unstage the given paths (index only, working tree untouched). Best-effort."""
+    if not paths:
+        return
+    _run(repository_path, ["reset", "--", *paths], check=False)
+
+
 def commit(repository_path: Path, message: str) -> None:
     """Create a commit with the given message."""
     _run(repository_path, ["commit", "-m", message])
