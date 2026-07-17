@@ -58,8 +58,8 @@ If LeetCode's API is unreachable, it just asks for the title, difficulty, and ta
 ## Install
 
 ```bash
-git clone https://github.com/swapnil5053/Dsa-Sync.git
-cd Dsa-Sync
+git clone https://github.com/swapnil5053/dsa-sync.git
+cd dsa-sync
 pipx install .
 ```
 
